@@ -1,15 +1,17 @@
+/*
+ * Copyright 2022 thunderbiscuit and contributors.
+ * Use of this source code is governed by the Apache 2.0 license that can be found in the ./LICENSE file.
+ */
+
 package com.goldenraven.gargoyle
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import com.goldenraven.gargoyle.ui.HomeScreen
 import com.goldenraven.gargoyle.ui.theme.GargoyleTheme
 
 class MainActivity : ComponentActivity() {
@@ -17,13 +19,13 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             GargoyleTheme {
-                // A surface container using the 'background' color from the theme
-                Surface(
-                    modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colorScheme.background
-                ) {
-                    Greeting("Gargoyle SeedAuth")
-                }
+                HomeScreen()
+                // Surface(
+                //     modifier = Modifier.fillMaxSize(),
+                //     color = MaterialTheme.colorScheme.background
+                // ) {
+                //     Greeting("Gargoyle SeedAuth")
+                // }
             }
         }
     }

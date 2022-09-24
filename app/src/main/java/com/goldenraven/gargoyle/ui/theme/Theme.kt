@@ -52,7 +52,7 @@ fun GargoyleTheme(
 
     MaterialTheme(
         colorScheme = colorScheme,
-        typography = Typography,
+        typography = GargoyleTypography,
         content = content
     )
 }

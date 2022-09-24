@@ -52,9 +52,12 @@ dependencies {
 
     // Compose
     implementation("androidx.activity:activity-compose:1.3.1")
+    implementation("androidx.compose.animation:animation:1.1.1")
     implementation("androidx.compose.ui:ui:1.1.1")
     implementation("androidx.compose.ui:ui-tooling-preview:1.1.1")
     implementation("androidx.compose.material3:material3:1.0.0-alpha02")
+    implementation("androidx.navigation:navigation-compose:2.5.0")
+    implementation("com.google.accompanist:accompanist-navigation-animation:0.23.1")
 
     // Tests
     testImplementation("junit:junit:4.13.2")
@@ -63,4 +66,8 @@ dependencies {
     androidTestImplementation("androidx.compose.ui:ui-test-junit4:1.1.1")
     debugImplementation("androidx.compose.ui:ui-tooling:1.1.1")
     debugImplementation("androidx.compose.ui:ui-test-manifest:1.1.1")
+}
+
+tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile>().configureEach {
+    kotlinOptions.freeCompilerArgs += "-opt-in=kotlin.RequiresOptIn"
 }

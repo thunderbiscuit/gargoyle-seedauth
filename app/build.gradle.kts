@@ -57,9 +57,11 @@ dependencies {
     implementation("androidx.compose.animation:animation:1.1.1")
     implementation("androidx.compose.ui:ui:1.1.1")
     implementation("androidx.compose.ui:ui-tooling-preview:1.1.1")
-    implementation("androidx.compose.material3:material3:1.0.0-alpha02")
+    implementation("androidx.compose.material3:material3:1.0.0-beta03")
     implementation("androidx.navigation:navigation-compose:2.5.0")
     implementation("com.google.accompanist:accompanist-navigation-animation:0.23.1")
+    implementation("androidx.constraintlayout:constraintlayout-compose:1.0.1")
+
 
     // QR Codes
     implementation("androidx.camera:camera-camera2:1.1.0")

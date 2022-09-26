@@ -19,7 +19,7 @@ internal fun MenuScreen() {
         color = Color(80, 0, 200, 100)
     ) {
         Text(
-            "Menu Screen"
+            "Logins Screen"
         )
     }
 }

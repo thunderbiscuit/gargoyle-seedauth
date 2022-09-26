@@ -6,8 +6,7 @@
 package com.goldenraven.gargoyle.ui
 
 import androidx.compose.foundation.layout.*
-import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
+import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -16,10 +15,10 @@ import androidx.compose.ui.graphics.Color
 internal fun LoginsScreen() {
     Surface(
         modifier = Modifier.fillMaxSize(),
-        color = Color(280, 0, 200, 100)
+        color = Color(0xffbbaabb)
     ) {
         Text(
-            "Logins Screen"
+            "Menu Screen"
         )
     }
 }

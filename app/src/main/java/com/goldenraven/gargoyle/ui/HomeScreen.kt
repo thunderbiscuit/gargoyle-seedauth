@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
@@ -45,7 +46,9 @@ internal fun BottomNavigationBar(navController: NavController) {
         NavigationItem.Menu
     )
 
-    NavigationBar(tonalElevation = 0.dp) {
+    NavigationBar(
+        tonalElevation = 0.dp,
+    ) {
         items.forEachIndexed { index, item ->
             NavigationBarItem(
                 icon = {
@@ -71,13 +74,13 @@ internal fun BottomNavigationBar(navController: NavController) {
                         launchSingleTop = true
                     }
                 },
-                // colors = NavigationBarItemDefaults.colors(
-                //     selectedIconColor = padawan_theme_onBackground,
-                //     selectedTextColor = padawan_theme_onBackground,
-                //     unselectedIconColor = padawan_theme_navigation_bar_unselected,
-                //     unselectedTextColor = padawan_theme_navigation_bar_unselected,
-                //     indicatorColor = white,
-                // )
+                colors = NavigationBarItemDefaults.colors(
+                    selectedIconColor = Color(0xff1f0208),
+                    selectedTextColor = Color(0xff1f0208),
+                    unselectedIconColor = Color(0xff8a8a8a),
+                    unselectedTextColor = Color(0xff8a8a8a),
+                    indicatorColor = Color(0xffffffff),
+                )
             )
         }
     }

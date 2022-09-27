@@ -29,7 +29,9 @@ import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
+import androidx.constraintlayout.compose.ChainStyle
 import androidx.constraintlayout.compose.ConstraintLayout
+import androidx.constraintlayout.compose.Dimension
 import androidx.core.content.ContextCompat
 import com.goldenraven.gargoyle.R
 import com.goldenraven.gargoyle.ui.theme.GargoyleTypography
@@ -43,40 +45,54 @@ internal fun ScanScreen() {
         mutableStateOf(false)
     }
 
-    Column(
+    ConstraintLayout(
         modifier = Modifier
-            .fillMaxWidth()
-            .padding(top = 24.dp, start = 16.dp, end = 16.dp),
-        verticalArrangement = Arrangement.Top,
-        horizontalAlignment = Alignment.Start,
+            .fillMaxSize()
     ) {
-        Text(
-            text = "Scan a QR Code",
-            style = GargoyleTypography.headlineSmall,
-            modifier = Modifier.padding(bottom = 4.dp)
-        )
-        Text(
-            text = "Scan a QR code containing a SeedAuth (lnurl-auth) URL",
-            style = GargoyleTypography.bodyMedium,
-            color = Color(0xff787878)
-        )
-    }
+        val (title, scanner, button) = createRefs()
+        val verticalChain = createVerticalChain(title, scanner, button, chainStyle = ChainStyle.SpreadInside)
 
-    Column(
-        modifier = Modifier
-            .fillMaxWidth()
-            .fillMaxHeight()
-            .padding(top = 90.dp),
-        verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally,
-    ) {
+        Column(
+
+            modifier = Modifier
+                .padding(top = 48.dp)
+                .constrainAs(title) {
+                    top.linkTo(parent.top)
+                    start.linkTo(parent.absoluteLeft)
+                    end.linkTo(parent.absoluteRight)
+                    bottom.linkTo(scanner.top)
+                }
+        ) {
+            // Title
+            Text(
+                text = "Scan a QR Code",
+                style = GargoyleTypography.headlineSmall,
+                color = Color(0xff1f0208),
+                modifier = Modifier
+                    .padding(start = 32.dp, end = 32.dp, bottom = 8.dp)
+            )
+            Text(
+                text = "Scan a QR code containing a SeedAuth (lnurl-auth) URL",
+                style = GargoyleTypography.bodyMedium,
+                color = Color(0xff787878),
+                modifier = Modifier
+                    .padding(start = 32.dp, end = 32.dp)
+            )
+        }
+
+        // Scanner
         Card(
             border = standardBorder,
             shape = RoundedCornerShape(20.dp),
             modifier = Modifier
                 .standardShadow(20.dp)
-                .align(Alignment.CenterHorizontally)
-                .size(300.dp, 400.dp)
+                .size(300.dp, 340.dp)
+                .constrainAs(scanner) {
+                    top.linkTo(title.bottom)
+                    absoluteLeft.linkTo(parent.absoluteLeft)
+                    absoluteRight.linkTo(parent.absoluteRight)
+                    bottom.linkTo(button.top)
+                }
         ) {
             Surface(
                 modifier = Modifier.fillMaxSize(),
@@ -86,8 +102,7 @@ internal fun ScanScreen() {
             }
         }
 
-        Spacer(modifier = Modifier.height(40.dp))
-
+        // Scan/Cancel button
         if (!scannerOpen) {
             Button(
                 onClick = { scannerOpen = true },
@@ -95,11 +110,17 @@ internal fun ScanScreen() {
                 shape = RoundedCornerShape(20.dp),
                 border = standardBorder,
                 modifier = Modifier
-                    .padding(all = 4.dp)
+                    // .padding(all = 4.dp)
+                    .padding(top = 4.dp, start = 4.dp, end = 4.dp, bottom = 24.dp)
                     .standardShadow(20.dp)
-                    // .weight(weight = 0.5f)
                     .height(70.dp)
                     .width(140.dp)
+                    .constrainAs(button) {
+                        // top.linkTo(scanner.bottom)
+                        start.linkTo(parent.absoluteLeft)
+                        end.linkTo(parent.absoluteRight)
+                        bottom.linkTo(parent.bottom, 48.dp)
+                    }
             ) {
                 Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.padding(vertical = 4.dp)) {
                     Text(
@@ -122,10 +143,16 @@ internal fun ScanScreen() {
                 shape = RoundedCornerShape(20.dp),
                 border = standardBorder,
                 modifier = Modifier
-                    .padding(all = 4.dp)
+                    .padding(top = 4.dp, start = 4.dp, end = 4.dp, bottom = 120.dp)
                     .standardShadow(20.dp)
                     .height(70.dp)
                     .width(140.dp)
+                    .constrainAs(button) {
+                        // top.linkTo(scanner.bottom)
+                        start.linkTo(parent.absoluteLeft)
+                        end.linkTo(parent.absoluteRight)
+                        bottom.linkTo(parent.bottom)
+                    }
             ) {
                 Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.padding(vertical = 4.dp)) {
                     Text(
@@ -173,9 +200,7 @@ fun ScannerBox(scannerOpen: Boolean) {
         launcher.launch(Manifest.permission.CAMERA)
     }
 
-    ConstraintLayout(
-        // modifier = Modifier.size(300.dp, 300.dp)
-    ) {
+    ConstraintLayout {
         val (camera) = createRefs()
 
         Box(
@@ -186,11 +211,10 @@ fun ScannerBox(scannerOpen: Boolean) {
                     absoluteRight.linkTo(parent.absoluteRight)
                     bottom.linkTo(parent.bottom)
                 }
-                .padding(0.dp).clip(RoundedCornerShape(20.dp))
+                .padding(0.dp)
+                .clip(RoundedCornerShape(20.dp))
         ) {
-            Column(
-                // modifier = Modifier.fillMaxSize()
-            ) {
+            Column {
                 if (hasCameraPermission && scannerOpen) {
                     AndroidView(
                         factory = { context ->

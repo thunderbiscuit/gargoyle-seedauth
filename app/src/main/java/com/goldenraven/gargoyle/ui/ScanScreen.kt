@@ -103,70 +103,35 @@ internal fun ScanScreen() {
         }
 
         // Scan/Cancel button
-        if (!scannerOpen) {
-            Button(
-                onClick = { scannerOpen = true },
-                colors = ButtonDefaults.buttonColors(containerColor = Color(0xfff6cf47)),
-                shape = RoundedCornerShape(20.dp),
-                border = standardBorder,
-                modifier = Modifier
-                    // .padding(all = 4.dp)
-                    .padding(top = 4.dp, start = 4.dp, end = 4.dp, bottom = 24.dp)
-                    .standardShadow(20.dp)
-                    .height(70.dp)
-                    .width(140.dp)
-                    .constrainAs(button) {
-                        // top.linkTo(scanner.bottom)
-                        start.linkTo(parent.absoluteLeft)
-                        end.linkTo(parent.absoluteRight)
-                        bottom.linkTo(parent.bottom, 48.dp)
-                    }
-            ) {
-                Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.padding(vertical = 4.dp)) {
-                    Text(
-                        text = "Scan",
-                        style = GargoyleTypography.labelLarge,
-                        color = Color(0xff000000)
-                    )
-                    Spacer(modifier = Modifier.width(8.dp))
-                    Icon(
-                        painter = painterResource(id = R.drawable.hicon_scan_1),
-                        contentDescription = "Scan icon",
-                        tint = Color(0xff000000)
-                    )
+        Button(
+            onClick = { scannerOpen = !scannerOpen },
+            colors = ButtonDefaults.buttonColors(containerColor = Color(0xfff6cf47)),
+            shape = RoundedCornerShape(20.dp),
+            border = standardBorder,
+            modifier = Modifier
+                // .padding(all = 4.dp)
+                .padding(top = 4.dp, start = 4.dp, end = 4.dp, bottom = 24.dp)
+                .standardShadow(20.dp)
+                .height(70.dp)
+                .width(140.dp)
+                .constrainAs(button) {
+                    start.linkTo(parent.absoluteLeft)
+                    end.linkTo(parent.absoluteRight)
+                    bottom.linkTo(parent.bottom, 48.dp)
                 }
-            }
-        } else {
-            Button(
-                onClick = { scannerOpen = true },
-                colors = ButtonDefaults.buttonColors(containerColor = Color(0xfff6cf47)),
-                shape = RoundedCornerShape(20.dp),
-                border = standardBorder,
-                modifier = Modifier
-                    .padding(top = 4.dp, start = 4.dp, end = 4.dp, bottom = 120.dp)
-                    .standardShadow(20.dp)
-                    .height(70.dp)
-                    .width(140.dp)
-                    .constrainAs(button) {
-                        // top.linkTo(scanner.bottom)
-                        start.linkTo(parent.absoluteLeft)
-                        end.linkTo(parent.absoluteRight)
-                        bottom.linkTo(parent.bottom)
-                    }
-            ) {
-                Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.padding(vertical = 4.dp)) {
-                    Text(
-                        text = "Cancel",
-                        style = GargoyleTypography.labelLarge,
-                        color = Color(0xff000000)
-                    )
-                    Spacer(modifier = Modifier.width(8.dp))
-                    Icon(
-                        painter = painterResource(id = R.drawable.hicon_close_circle),
-                        contentDescription = "Cancel scan",
-                        tint = Color(0xff000000)
-                    )
-                }
+        ) {
+            Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.padding(vertical = 4.dp)) {
+                Text(
+                    text = if (!scannerOpen) "Scan" else "Cancel",
+                    style = GargoyleTypography.labelLarge,
+                    color = Color(0xff000000)
+                )
+                Spacer(modifier = Modifier.width(8.dp))
+                Icon(
+                    painter = if (!scannerOpen) painterResource(id = R.drawable.hicon_scan_1) else painterResource(id = R.drawable.hicon_close_circle),
+                    contentDescription = if (!scannerOpen) "Scan icon" else "Cancel icon",
+                    tint = Color(0xff000000)
+                )
             }
         }
     }

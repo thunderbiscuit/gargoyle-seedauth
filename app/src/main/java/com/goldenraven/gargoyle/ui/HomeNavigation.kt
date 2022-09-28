@@ -53,7 +53,6 @@ fun HomeNavigation(
                     "menu_screen" -> slideIntoContainer(AnimatedContentScope.SlideDirection.End, animationSpec = tween(animationDuration))
                     else          -> fadeIn(animationSpec = tween(1000))
                 }
-                // slideIntoContainer(AnimatedContentScope.SlideDirection.Start, animationSpec = tween(animationDuration))
             },
             popEnterTransition = {
                 when (initialState.destination.route) {
@@ -61,7 +60,6 @@ fun HomeNavigation(
                     "menu_screen" -> slideIntoContainer(AnimatedContentScope.SlideDirection.End, animationSpec = tween(animationDuration))
                     else          -> fadeIn(animationSpec = tween(1000))
                 }
-                // slideIntoContainer(AnimatedContentScope.SlideDirection.Start, animationSpec = tween(animationDuration))
             },
             exitTransition = {
                 when (targetState.destination.route) {
@@ -69,7 +67,6 @@ fun HomeNavigation(
                     "menu_screen" -> slideOutOfContainer(AnimatedContentScope.SlideDirection.Start, animationSpec = tween(animationDuration))
                     else          -> fadeOut(animationSpec = tween(1000))
                 }
-                // slideOutOfContainer(AnimatedContentScope.SlideDirection.End, animationSpec = tween(animationDuration))
             },
             popExitTransition = {
                 when (targetState.destination.route) {
@@ -77,7 +74,6 @@ fun HomeNavigation(
                     "menu_screen" -> slideOutOfContainer(AnimatedContentScope.SlideDirection.Start, animationSpec = tween(animationDuration))
                     else          -> fadeOut(animationSpec = tween(1000))
                 }
-                // slideOutOfContainer(AnimatedContentScope.SlideDirection.End, animationSpec = tween(animationDuration))
             }
         ) { LoginsScreen() }
 

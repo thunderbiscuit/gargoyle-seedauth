@@ -56,7 +56,7 @@ internal fun MenuScreen() {
             )
             Spacer(modifier = Modifier.weight(1f))
             Icon(
-                painter = painterResource(id = R.drawable.hicon_right_2),
+                painter = painterResource(id = R.drawable.ic_hicon_right_2),
                 contentDescription = "Scan icon",
                 tint = Color(0xff000000)
             )
@@ -78,7 +78,7 @@ internal fun MenuScreen() {
             )
             Spacer(modifier = Modifier.weight(1f))
             Icon(
-                painter = painterResource(id = R.drawable.hicon_right_2),
+                painter = painterResource(id = R.drawable.ic_hicon_right_2),
                 contentDescription = "Scan icon",
                 tint = Color(0xff000000)
             )
@@ -100,7 +100,7 @@ internal fun MenuScreen() {
             )
             Spacer(modifier = Modifier.weight(1f))
             Icon(
-                painter = painterResource(id = R.drawable.hicon_right_2),
+                painter = painterResource(id = R.drawable.ic_hicon_right_2),
                 contentDescription = "Scan icon",
                 tint = Color(0xff000000)
             )
@@ -122,7 +122,7 @@ internal fun MenuScreen() {
             )
             Spacer(modifier = Modifier.weight(1f))
             Icon(
-                painter = painterResource(id = R.drawable.hicon_right_2),
+                painter = painterResource(id = R.drawable.ic_hicon_right_2),
                 contentDescription = "Scan icon",
                 tint = Color(0xff000000)
             )

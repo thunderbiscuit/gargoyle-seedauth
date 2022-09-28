@@ -31,7 +31,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.constraintlayout.compose.ChainStyle
 import androidx.constraintlayout.compose.ConstraintLayout
-import androidx.constraintlayout.compose.Dimension
 import androidx.core.content.ContextCompat
 import com.goldenraven.gargoyle.R
 import com.goldenraven.gargoyle.ui.theme.GargoyleTypography
@@ -45,6 +44,15 @@ internal fun ScanScreen() {
         mutableStateOf(false)
     }
 
+    val openDialog = remember { mutableStateOf(true) }
+
+    if (openDialog.value) {
+        LoginDialog(
+            domain = "https://example.com",
+            openDialog = openDialog
+        )
+    }
+    
     ConstraintLayout(
         modifier = Modifier
             .fillMaxSize()
@@ -128,7 +136,7 @@ internal fun ScanScreen() {
                 )
                 Spacer(modifier = Modifier.width(8.dp))
                 Icon(
-                    painter = if (!scannerOpen) painterResource(id = R.drawable.hicon_scan_1) else painterResource(id = R.drawable.hicon_close_circle),
+                    painter = if (!scannerOpen) painterResource(id = R.drawable.ic_hicon_scan_1) else painterResource(id = R.drawable.ic_hicon_close_circle),
                     contentDescription = if (!scannerOpen) "Scan icon" else "Cancel icon",
                     tint = Color(0xff000000)
                 )
@@ -228,4 +236,91 @@ fun ScannerBox(scannerOpen: Boolean) {
             }
         }
     }
+}
+
+// TODO: add icon
+@Composable
+private fun LoginDialog(domain: String, openDialog: MutableState<Boolean>) {
+    AlertDialog(
+        // modifier = Modifier.height(400.dp),
+        onDismissRequest = {},
+        title = {
+            Text(
+                text = "Login",
+                style = GargoyleTypography.headlineMedium,
+                color = Color(0xff1f0208)
+            )
+        },
+        text = {
+            Text(
+                text = "You are about to login to the following domain: $domain",
+                color = Color(0xff2f2f2f)
+            )
+        },
+
+        dismissButton = {
+            Button(
+                onClick = {
+                    Log.i("ScanScreen", "User declined the login")
+                    openDialog.value = false
+                },
+                colors = ButtonDefaults.buttonColors(containerColor = Color(0xfffc4f4f)),
+                shape = RoundedCornerShape(20.dp),
+                border = standardBorder,
+                modifier = Modifier
+                    .padding(top = 4.dp, start = 4.dp, end = 4.dp, bottom = 24.dp)
+                    .standardShadow(20.dp)
+                    .height(70.dp)
+                    .width(140.dp)
+            ) {
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    modifier = Modifier.padding(vertical = 4.dp)
+                ) {
+                    Text(
+                        text = "Decline",
+                        style = GargoyleTypography.labelLarge,
+                        color = Color(0xff000000)
+                    )
+                    Spacer(modifier = Modifier.width(8.dp))
+                    Icon(
+                        painter = painterResource(id = R.drawable.ic_hicon_dislike),
+                        contentDescription = "Do not log in icon",
+                        tint = Color(0xff000000)
+                    )
+                }
+            }
+        },
+
+        confirmButton = {
+            Button(
+                onClick = {
+                    Log.i("ScanScreen", "User accepted the login")
+                    openDialog.value = false
+                },
+                colors = ButtonDefaults.buttonColors(containerColor = Color(0xff78c5b2)),
+                shape = RoundedCornerShape(20.dp),
+                border = standardBorder,
+                modifier = Modifier
+                    .padding(top = 4.dp, start = 4.dp, end = 4.dp, bottom = 24.dp)
+                    .standardShadow(20.dp)
+                    .height(70.dp)
+                    .width(140.dp)
+            ) {
+                Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.padding(vertical = 4.dp)) {
+                    Text(
+                        text = "Proceed",
+                        style = GargoyleTypography.labelLarge,
+                        color = Color(0xff000000)
+                    )
+                    Spacer(modifier = Modifier.width(8.dp))
+                    Icon(
+                        painter = painterResource(id = R.drawable.ic_hicon_like),
+                        contentDescription = "Proceed icon",
+                        tint = Color(0xff000000)
+                    )
+                }
+            }
+        },
+    )
 }

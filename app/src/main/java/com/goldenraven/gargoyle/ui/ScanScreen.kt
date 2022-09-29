@@ -40,15 +40,19 @@ import com.goldenraven.gargoyle.utils.QrCodeAnalyzer
 
 @Composable
 internal fun ScanScreen() {
-    var scannerOpen: Boolean by remember {
-        mutableStateOf(false)
-    }
+    val scannerOpen = remember { mutableStateOf(false) }
+    val openDialog = remember { mutableStateOf(false) }
+    var code by remember { mutableStateOf("") }
 
-    val openDialog = remember { mutableStateOf(true) }
+    fun showDialog(domain: String) {
+        code = domain
+        scannerOpen.value = false
+        openDialog.value = true
+    }
 
     if (openDialog.value) {
         LoginDialog(
-            domain = "https://example.com",
+            domain = code,
             openDialog = openDialog
         )
     }
@@ -106,13 +110,16 @@ internal fun ScanScreen() {
                 modifier = Modifier.fillMaxSize(),
                 color = Color(0xffd9d9d9)
             ) {
-                ScannerBox(scannerOpen)
+                ScannerBox(scannerOpen, ::showDialog)
             }
         }
 
         // Scan/Cancel button
         Button(
-            onClick = { scannerOpen = !scannerOpen },
+            onClick = {
+                Log.i("ScanScreen", "We're changing the value of scannerOpen")
+                scannerOpen.value = !scannerOpen.value
+            },
             colors = ButtonDefaults.buttonColors(containerColor = Color(0xfff6cf47)),
             shape = RoundedCornerShape(20.dp),
             border = standardBorder,
@@ -130,14 +137,14 @@ internal fun ScanScreen() {
         ) {
             Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.padding(vertical = 4.dp)) {
                 Text(
-                    text = if (!scannerOpen) "Scan" else "Cancel",
+                    text = if (!scannerOpen.value) "Scan" else "Cancel",
                     style = GargoyleTypography.labelLarge,
                     color = Color(0xff000000)
                 )
                 Spacer(modifier = Modifier.width(8.dp))
                 Icon(
-                    painter = if (!scannerOpen) painterResource(id = R.drawable.ic_hicon_scan_1) else painterResource(id = R.drawable.ic_hicon_close_circle),
-                    contentDescription = if (!scannerOpen) "Scan icon" else "Cancel icon",
+                    painter = if (!scannerOpen.value) painterResource(id = R.drawable.ic_hicon_scan_1) else painterResource(id = R.drawable.ic_hicon_close_circle),
+                    contentDescription = if (!scannerOpen.value) "Scan icon" else "Cancel icon",
                     tint = Color(0xff000000)
                 )
             }
@@ -146,7 +153,7 @@ internal fun ScanScreen() {
 }
 
 @Composable
-fun ScannerBox(scannerOpen: Boolean) {
+fun ScannerBox(scannerOpen: MutableState<Boolean>, showDialog: (String) -> Unit) {
     val context = LocalContext.current
     val lifecycleOwner = LocalLifecycleOwner.current
     val cameraProviderFuture = remember {
@@ -160,9 +167,7 @@ fun ScannerBox(scannerOpen: Boolean) {
             ) == PackageManager.PERMISSION_GRANTED
         )
     }
-    var code by remember {
-        mutableStateOf("")
-    }
+
     val launcher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.RequestPermission(),
         onResult = { granted ->
@@ -188,7 +193,7 @@ fun ScannerBox(scannerOpen: Boolean) {
                 .clip(RoundedCornerShape(20.dp))
         ) {
             Column {
-                if (hasCameraPermission && scannerOpen) {
+                if (hasCameraPermission && scannerOpen.value) {
                     AndroidView(
                         factory = { context ->
                             val previewView = PreviewView(context)
@@ -209,8 +214,8 @@ fun ScannerBox(scannerOpen: Boolean) {
                             imageAnalysis.setAnalyzer(
                                 ContextCompat.getMainExecutor(context),
                                 QrCodeAnalyzer { result ->
-                                    Log.i("LogScreen", "QR code is $result")
-                                    code = result
+                                    Log.i("ScanScreen", "QR code is $result")
+                                    showDialog(result)
                                 }
                             )
 
@@ -228,10 +233,6 @@ fun ScannerBox(scannerOpen: Boolean) {
                         },
                         modifier = Modifier.weight(1f)
                     )
-                    // Text(
-                    //     text = "QR code value: $code",
-                    //     modifier = Modifier.fillMaxWidth()
-                    // )
                 }
             }
         }
@@ -271,15 +272,15 @@ private fun LoginDialog(domain: String, openDialog: MutableState<Boolean>) {
                     .padding(top = 4.dp, start = 4.dp, end = 4.dp, bottom = 24.dp)
                     .standardShadow(20.dp)
                     .height(70.dp)
-                    .width(140.dp)
+                    .width(100.dp)
             ) {
                 Row(
                     verticalAlignment = Alignment.CenterVertically,
                     modifier = Modifier.padding(vertical = 4.dp)
                 ) {
                     Text(
-                        text = "Decline",
-                        style = GargoyleTypography.labelLarge,
+                        text = "",
+                        style = GargoyleTypography.labelMedium,
                         color = Color(0xff000000)
                     )
                     Spacer(modifier = Modifier.width(8.dp))
@@ -305,12 +306,12 @@ private fun LoginDialog(domain: String, openDialog: MutableState<Boolean>) {
                     .padding(top = 4.dp, start = 4.dp, end = 4.dp, bottom = 24.dp)
                     .standardShadow(20.dp)
                     .height(70.dp)
-                    .width(140.dp)
+                    .width(100.dp)
             ) {
                 Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.padding(vertical = 4.dp)) {
                     Text(
-                        text = "Proceed",
-                        style = GargoyleTypography.labelLarge,
+                        text = "",
+                        style = GargoyleTypography.labelMedium,
                         color = Color(0xff000000)
                     )
                     Spacer(modifier = Modifier.width(8.dp))

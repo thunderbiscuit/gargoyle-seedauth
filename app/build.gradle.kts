@@ -71,6 +71,10 @@ dependencies {
     implementation("androidx.camera:camera-view:1.1.0")
     implementation("com.google.zxing:core:3.4.1")
 
+    // Ktor
+    implementation("io.ktor:ktor-client-core:2.1.2")
+    implementation("io.ktor:ktor-client-cio:2.1.2")
+
     // Tests
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.3")

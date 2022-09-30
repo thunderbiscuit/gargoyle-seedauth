@@ -33,10 +33,12 @@ import androidx.constraintlayout.compose.ChainStyle
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.core.content.ContextCompat
 import com.goldenraven.gargoyle.R
+import com.goldenraven.gargoyle.ui.network.KtorClient
 import com.goldenraven.gargoyle.ui.theme.GargoyleTypography
 import com.goldenraven.gargoyle.ui.theme.standardBorder
 import com.goldenraven.gargoyle.ui.theme.standardShadow
 import com.goldenraven.gargoyle.utils.QrCodeAnalyzer
+import kotlinx.coroutines.runBlocking
 
 @Composable
 internal fun ScanScreen() {
@@ -119,6 +121,10 @@ internal fun ScanScreen() {
             onClick = {
                 Log.i("ScanScreen", "We're changing the value of scannerOpen")
                 scannerOpen.value = !scannerOpen.value
+                // runBlocking {
+                //     val client = KtorClient()
+                //     client.login()
+                // }
             },
             colors = ButtonDefaults.buttonColors(containerColor = Color(0xfff6cf47)),
             shape = RoundedCornerShape(20.dp),
@@ -297,6 +303,10 @@ private fun LoginDialog(domain: String, openDialog: MutableState<Boolean>) {
             Button(
                 onClick = {
                     Log.i("ScanScreen", "User accepted the login")
+                    runBlocking {
+                        val client = KtorClient()
+                        client.login()
+                    }
                     openDialog.value = false
                 },
                 colors = ButtonDefaults.buttonColors(containerColor = Color(0xff78c5b2)),

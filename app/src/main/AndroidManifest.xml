@@ -16,7 +16,7 @@
         android:theme="@style/Theme.Gargoyle"
         tools:targetApi="31">
         <activity
-            android:name=".MainActivity"
+            android:name=".GargoyleActivity"
             android:exported="true"
             android:theme="@style/Theme.Gargoyle">
             <intent-filter>

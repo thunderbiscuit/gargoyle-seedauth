@@ -62,6 +62,8 @@ dependencies {
     implementation("com.google.accompanist:accompanist-navigation-animation:0.23.1")
     implementation("androidx.constraintlayout:constraintlayout-compose:1.0.1")
 
+    // Preferences Datastore
+    implementation("androidx.datastore:datastore-preferences:1.0.0")
 
     // QR Codes
     implementation("androidx.camera:camera-camera2:1.1.0")

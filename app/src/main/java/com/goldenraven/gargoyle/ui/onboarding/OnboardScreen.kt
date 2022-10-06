@@ -21,6 +21,7 @@ import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ChainStyle
 import androidx.constraintlayout.compose.ConstraintLayout
 import com.goldenraven.gargoyle.R
+import com.goldenraven.gargoyle.data.Keychain
 import com.goldenraven.gargoyle.ui.theme.GargoyleTypography
 import com.goldenraven.gargoyle.ui.theme.standardBorder
 import com.goldenraven.gargoyle.ui.theme.standardShadow
@@ -97,6 +98,7 @@ fun OnboardScreen() {
             Button(
                 onClick = {
                     Log.i("OnboardScreen", "Creating a keychain")
+                    Keychain.generateKeychain()
                 },
                 colors = ButtonDefaults.buttonColors(containerColor = Color(0xfff6cf47)),
                 shape = RoundedCornerShape(20.dp),

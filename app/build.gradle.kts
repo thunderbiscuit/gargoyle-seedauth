@@ -1,6 +1,10 @@
+import org.gradle.api.tasks.testing.logging.TestExceptionFormat
+import org.gradle.api.tasks.testing.logging.TestLogEvent
+
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
+    id("org.jetbrains.kotlin.plugin.serialization")
 }
 
 android {
@@ -37,7 +41,7 @@ android {
         compose = true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.1.1"
+        kotlinCompilerExtensionVersion = "1.2.0"
     }
     packagingOptions {
         resources {
@@ -64,6 +68,7 @@ dependencies {
 
     // Preferences Datastore
     implementation("androidx.datastore:datastore-preferences:1.0.0")
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.4.0")
 
     // QR Codes
     implementation("androidx.camera:camera-camera2:1.1.0")
@@ -75,8 +80,15 @@ dependencies {
     implementation("io.ktor:ktor-client-core:2.1.2")
     implementation("io.ktor:ktor-client-cio:2.1.2")
 
+    // bitcoin-kmp
+    implementation("fr.acinq.bitcoin:bitcoin-kmp-jvm:0.9.0")
+    implementation("fr.acinq.secp256k1:secp256k1-kmp-jni-jvm-darwin:0.7.0")
+    implementation("fr.acinq.secp256k1:secp256k1-kmp-jni-android:0.7.0")
+
     // Tests
+    testImplementation(kotlin("test"))
     testImplementation("junit:junit:4.13.2")
+    testImplementation("fr.acinq.secp256k1:secp256k1-kmp-jni-jvm-darwin:0.7.0")
     androidTestImplementation("androidx.test.ext:junit:1.1.3")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.4.0")
     androidTestImplementation("androidx.compose.ui:ui-test-junit4:1.2.1")
@@ -86,4 +98,20 @@ dependencies {
 
 tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile>().configureEach {
     kotlinOptions.freeCompilerArgs += "-opt-in=kotlin.RequiresOptIn"
+}
+
+tasks.withType<Test> {
+    testLogging {
+        events = setOf(
+            TestLogEvent.PASSED,
+            TestLogEvent.SKIPPED,
+            TestLogEvent.FAILED,
+            TestLogEvent.STANDARD_OUT,
+            TestLogEvent.STANDARD_ERROR
+        )
+        exceptionFormat = TestExceptionFormat.FULL
+        showExceptions = true
+        showCauses = true
+        showStackTraces = true
+    }
 }

@@ -33,7 +33,7 @@ import androidx.constraintlayout.compose.ChainStyle
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.core.content.ContextCompat
 import com.goldenraven.gargoyle.R
-import com.goldenraven.gargoyle.ui.network.KtorClient
+import com.goldenraven.gargoyle.network.KtorClient
 import com.goldenraven.gargoyle.ui.theme.GargoyleTypography
 import com.goldenraven.gargoyle.ui.theme.standardBorder
 import com.goldenraven.gargoyle.ui.theme.standardShadow

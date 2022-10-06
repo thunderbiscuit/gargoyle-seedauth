@@ -8,5 +8,6 @@ package com.goldenraven.gargoyle.ui
 sealed class Screen(val route: String) {
     object ScanScreen : Screen("scan_screen")
     object LoginsScreen : Screen("logins_screen")
-    object MenuScreen : Screen("menu_screen")
+    object ExtrasScreen : Screen("extras_screen")
+    object RecoveryPhraseScreen : Screen("recovery_phrase_screen")
 }

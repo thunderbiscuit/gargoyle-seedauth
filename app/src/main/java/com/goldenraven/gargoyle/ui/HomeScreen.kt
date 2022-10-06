@@ -30,7 +30,7 @@ internal fun HomeScreen() {
 
     Scaffold(bottomBar = { BottomNavigationBar(navController) }) { innerPadding ->
         Box(modifier = Modifier.padding(innerPadding)) {
-            HomeNavigation(
+            Navigation(
                 navController = navController
             )
         }

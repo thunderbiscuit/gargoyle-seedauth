@@ -3,7 +3,7 @@
  * Use of this source code is governed by the Apache 2.0 license that can be found in the ./LICENSE file.
  */
 
-package com.goldenraven.gargoyle.ui
+package com.goldenraven.gargoyle.ui.extras
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -14,11 +14,13 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import com.goldenraven.gargoyle.R
+import com.goldenraven.gargoyle.ui.Screen
 import com.goldenraven.gargoyle.ui.theme.GargoyleTypography
 
 @Composable
-internal fun MenuScreen() {
+internal fun ExtrasScreen(navController: NavController) {
     Column(
         modifier = Modifier
             .padding(top = 48.dp)
@@ -39,7 +41,7 @@ internal fun MenuScreen() {
             modifier = Modifier
                 .padding(start = 24.dp, end = 24.dp, bottom = 12.dp)
         )
-        
+
         Button(
             onClick = {},
             colors = ButtonDefaults.buttonColors(containerColor = Color(0xfff0f0f0)),
@@ -63,7 +65,14 @@ internal fun MenuScreen() {
         }
 
         Button(
-            onClick = {},
+            onClick = {
+                navController.navigate(Screen.RecoveryPhraseScreen.route) {
+                    navController.graph.startDestinationRoute?.let { route ->
+                        popUpTo(route)
+                    }
+                    launchSingleTop = true
+                }
+            },
             colors = ButtonDefaults.buttonColors(containerColor = Color(0xfff0f0f0)),
             shape = RoundedCornerShape(8.dp),
             modifier = Modifier

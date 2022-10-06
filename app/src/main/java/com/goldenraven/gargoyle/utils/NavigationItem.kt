@@ -24,7 +24,7 @@ sealed class NavigationItem(val route: String, val icon_filled: Int, val icon_ou
     )
 
     object Menu : NavigationItem(
-        route = Screen.MenuScreen.route,
+        route = Screen.ExtrasScreen.route,
         icon_filled = R.drawable.ic_hicon_menu,
         icon_outline = R.drawable.ic_hicon_menu,
         title = "Menu"

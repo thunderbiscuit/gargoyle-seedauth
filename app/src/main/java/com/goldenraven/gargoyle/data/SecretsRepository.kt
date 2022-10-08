@@ -30,10 +30,10 @@ object SecretsRepository {
 
     fun decryptRecoveryPhrase(): String {
         Log.i("SecretsRepository", "We're decrypting the recovery phrase")
-        val recoveryPhrase: String
+        val recoveryPhrase: RecoveryPhrase
         runBlocking {
-            recoveryPhrase = dataStore.data.first().toString()
+            recoveryPhrase = dataStore.data.first()
         }
-        return recoveryPhrase
+        return recoveryPhrase.recoveryPhrase
     }
 }

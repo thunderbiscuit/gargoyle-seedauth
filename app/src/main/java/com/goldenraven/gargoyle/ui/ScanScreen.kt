@@ -28,6 +28,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.constraintlayout.compose.ChainStyle
 import androidx.constraintlayout.compose.ConstraintLayout
@@ -38,23 +39,29 @@ import com.goldenraven.gargoyle.ui.theme.GargoyleTypography
 import com.goldenraven.gargoyle.ui.theme.standardBorder
 import com.goldenraven.gargoyle.ui.theme.standardShadow
 import com.goldenraven.gargoyle.utils.QrCodeAnalyzer
+import com.goldenraven.gargoyle.utils.parseBech32EncodedUrl
+import io.ktor.http.*
 import kotlinx.coroutines.runBlocking
 
 @Composable
 internal fun ScanScreen() {
     val scannerOpen = remember { mutableStateOf(false) }
     val openDialog = remember { mutableStateOf(false) }
-    var code by remember { mutableStateOf("") }
+    var qrCode by remember { mutableStateOf("") }
 
-    fun showDialog(domain: String) {
-        code = domain
+    fun showDialog(result: String) {
+        qrCode = result
         scannerOpen.value = false
         openDialog.value = true
     }
 
     if (openDialog.value) {
+        val bech32EncodedUrl: String = qrCode.removePrefix("lightning:")
+        val url: Url = parseBech32EncodedUrl(bech32EncodedUrl)
+        Log.i("ScanScreen", "Url decoded is $url")
         LoginDialog(
-            domain = code,
+            domain = url.toString(),
+            url = url,
             openDialog = openDialog
         )
     }
@@ -221,6 +228,7 @@ fun ScannerBox(scannerOpen: MutableState<Boolean>, showDialog: (String) -> Unit)
                                 ContextCompat.getMainExecutor(context),
                                 QrCodeAnalyzer { result ->
                                     Log.i("ScanScreen", "QR code is $result")
+
                                     showDialog(result)
                                 }
                             )
@@ -247,7 +255,7 @@ fun ScannerBox(scannerOpen: MutableState<Boolean>, showDialog: (String) -> Unit)
 
 // TODO: add icon
 @Composable
-private fun LoginDialog(domain: String, openDialog: MutableState<Boolean>) {
+private fun LoginDialog(domain: String, url: Url, openDialog: MutableState<Boolean>) {
     AlertDialog(
         // modifier = Modifier.height(400.dp),
         onDismissRequest = {},
@@ -278,15 +286,16 @@ private fun LoginDialog(domain: String, openDialog: MutableState<Boolean>) {
                     .padding(top = 4.dp, start = 4.dp, end = 4.dp, bottom = 24.dp)
                     .standardShadow(20.dp)
                     .height(70.dp)
-                    .width(100.dp)
+                    .width(110.dp)
             ) {
                 Row(
                     verticalAlignment = Alignment.CenterVertically,
                     modifier = Modifier.padding(vertical = 4.dp)
                 ) {
                     Text(
-                        text = "",
+                        text = "Nope",
                         style = GargoyleTypography.labelMedium,
+                        fontSize = 12.sp,
                         color = Color(0xff000000)
                     )
                     Spacer(modifier = Modifier.width(8.dp))
@@ -305,23 +314,25 @@ private fun LoginDialog(domain: String, openDialog: MutableState<Boolean>) {
                     Log.i("ScanScreen", "User accepted the login")
                     runBlocking {
                         val client = KtorClient()
-                        client.login()
+                        client.login(url)
                     }
                     openDialog.value = false
                 },
                 colors = ButtonDefaults.buttonColors(containerColor = Color(0xff78c5b2)),
                 shape = RoundedCornerShape(20.dp),
+                contentPadding = PaddingValues(0.dp),
                 border = standardBorder,
                 modifier = Modifier
                     .padding(top = 4.dp, start = 4.dp, end = 4.dp, bottom = 24.dp)
                     .standardShadow(20.dp)
                     .height(70.dp)
-                    .width(100.dp)
+                    .width(110.dp)
             ) {
                 Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.padding(vertical = 4.dp)) {
                     Text(
-                        text = "",
+                        text = "Proceed",
                         style = GargoyleTypography.labelMedium,
+                        fontSize = 12.sp,
                         color = Color(0xff000000)
                     )
                     Spacer(modifier = Modifier.width(8.dp))

@@ -20,14 +20,19 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ChainStyle
 import androidx.constraintlayout.compose.ConstraintLayout
+import androidx.navigation.NavController
 import com.goldenraven.gargoyle.R
-import com.goldenraven.gargoyle.data.Keychain
+import com.goldenraven.gargoyle.ui.Screen
 import com.goldenraven.gargoyle.ui.theme.GargoyleTypography
 import com.goldenraven.gargoyle.ui.theme.standardBorder
 import com.goldenraven.gargoyle.ui.theme.standardShadow
+import com.goldenraven.gargoyle.utils.KeychainCreateType
 
 @Composable
-fun OnboardScreen() {
+fun OnboardScreen(
+    navController: NavController,
+    onBuildKeychainButtonPressed: (KeychainCreateType) -> Unit
+) {
 
     ConstraintLayout(
         modifier = Modifier
@@ -98,7 +103,8 @@ fun OnboardScreen() {
             Button(
                 onClick = {
                     Log.i("OnboardScreen", "Creating a keychain")
-                    Keychain.generateKeychain()
+                    // Keychain.generateKeychain()
+                    onBuildKeychainButtonPressed(KeychainCreateType.FROMSCRATCH)
                 },
                 colors = ButtonDefaults.buttonColors(containerColor = Color(0xfff6cf47)),
                 shape = RoundedCornerShape(20.dp),
@@ -148,7 +154,8 @@ fun OnboardScreen() {
             )
             TextButton(
                 onClick = {
-                    Log.i("OnboardScreen", "Creating a keychain")
+                    Log.i("OnboardScreen", "Recovering a keychain")
+                    navController.navigate(Screen.RecoveryScreen.route)
                 },
                 modifier = Modifier
                     .width(120.dp)

@@ -57,6 +57,7 @@ internal fun ScanScreen() {
 
     if (openDialog.value) {
         val bech32EncodedUrl: String = qrCode.removePrefix("lightning:")
+        Log.i("ScanScreen", "Bech32 Encoded Url passed to decoder is $bech32EncodedUrl")
         val url: Url = parseBech32EncodedUrl(bech32EncodedUrl)
         Log.i("ScanScreen", "Url decoded is $url")
         LoginDialog(
@@ -128,16 +129,11 @@ internal fun ScanScreen() {
             onClick = {
                 Log.i("ScanScreen", "We're changing the value of scannerOpen")
                 scannerOpen.value = !scannerOpen.value
-                // runBlocking {
-                //     val client = KtorClient()
-                //     client.login()
-                // }
             },
             colors = ButtonDefaults.buttonColors(containerColor = Color(0xfff6cf47)),
             shape = RoundedCornerShape(20.dp),
             border = standardBorder,
             modifier = Modifier
-                // .padding(all = 4.dp)
                 .padding(top = 4.dp, start = 4.dp, end = 4.dp, bottom = 24.dp)
                 .standardShadow(20.dp)
                 .height(70.dp)

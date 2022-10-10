@@ -27,9 +27,9 @@ object Keychain {
         SecretsRepository.encryptRecoveryPhrase(mnemonic.joinToString(" "))
     }
 
-    fun recoverKeychain(mnemonic: String): ExtendedPrivateKey {
-        val seed = toSeed(mnemonic, "")
-        return DeterministicWallet.generate(seed)
+    fun recoverKeychain(mnemonic: String) {
+        SettingsRepository.keychainInitiated()
+        SecretsRepository.encryptRecoveryPhrase(mnemonic)
     }
 
     // the passphrase is required to use the test vectors in https://github.com/rust-bitcoin/rust-bip39/blob/master/src/lib.rs

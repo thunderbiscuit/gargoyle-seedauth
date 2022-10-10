@@ -7,6 +7,7 @@ package com.goldenraven.gargoyle
 
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.datastore.core.DataStore
@@ -15,8 +16,9 @@ import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStore
 import com.goldenraven.gargoyle.data.*
 import com.goldenraven.gargoyle.ui.HomeScreen
-import com.goldenraven.gargoyle.ui.onboarding.OnboardScreen
+import com.goldenraven.gargoyle.ui.onboarding.OnboardNavigation
 import com.goldenraven.gargoyle.ui.theme.GargoyleTheme
+import com.goldenraven.gargoyle.utils.KeychainCreateType
 
 val Context.preferencesDataStore: DataStore<Preferences> by preferencesDataStore(name = "preferences")
 val Context.secretsDataStore: DataStore<RecoveryPhrase> by dataStore(
@@ -27,6 +29,24 @@ val Context.secretsDataStore: DataStore<RecoveryPhrase> by dataStore(
 class GargoyleActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        val onBuildKeychainButtonPressed : (KeychainCreateType) -> Unit = { keychainCreateType ->
+            try {
+                // load up a keychain either from scratch or using a BIP39 recovery phrase
+                when (keychainCreateType) {
+                    // if we create a keychain from scratch we don't need a recovery phrase
+                    is KeychainCreateType.FROMSCRATCH -> Keychain.generateKeychain()
+                    is KeychainCreateType.RECOVER     -> Keychain.recoverKeychain(keychainCreateType.recoveryPhrase)
+                }
+                setContent {
+                    GargoyleTheme {
+                        HomeScreen()
+                    }
+                }
+            } catch (e: Throwable) {
+                Log.i("GargoyleActivity", "Could not build keychain: $e")
+            }
+        }
 
         SettingsRepository.initSettingsRepository(preferencesDataStore)
         SecretsRepository.initSecretsRepository(secretsDataStore)
@@ -43,9 +63,10 @@ class GargoyleActivity : ComponentActivity() {
         } else {
             setContent {
                 GargoyleTheme {
-                    OnboardScreen()
+                    OnboardNavigation(onBuildKeychainButtonPressed)
                 }
             }
         }
+
     }
 }

@@ -3,25 +3,25 @@ name: Build Android APK
 on: [workflow_dispatch]
 
 jobs:
-  test:
-    name: Run tests
-    runs-on: ubuntu-20.04
-    steps:
-      - name: Checkout release branch
-        uses: actions/checkout@v2
-
-      - name: Set up JDK
-        uses: actions/setup-java@v2
-        with:
-          distribution: temurin
-          java-version: 11
-
-      - name: Run tests
-        run: ./gradlew test
+#  test:
+#    name: Run tests
+#    runs-on: ubuntu-20.04
+#    steps:
+#      - name: Checkout release branch
+#        uses: actions/checkout@v2
+#
+#      - name: Set up JDK
+#        uses: actions/setup-java@v2
+#        with:
+#          distribution: temurin
+#          java-version: 11
+#
+#      - name: Run tests
+#        run: ./gradlew test
 
   build:
     name: Generate APK
-    needs: test
+#    needs: test
     runs-on: ubuntu-20.04
     steps:
       - name: Checkout release branch

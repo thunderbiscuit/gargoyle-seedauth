@@ -20,14 +20,16 @@ import androidx.compose.ui.focus.FocusManager
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.semantics.semantics
-import androidx.compose.ui.semantics.testTag
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Devices
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
+import com.goldenraven.gargoyle.ui.theme.GargoyleTheme
 import com.goldenraven.gargoyle.ui.theme.GargoyleTypography
 import com.goldenraven.gargoyle.ui.theme.standardBorder
 import com.goldenraven.gargoyle.ui.theme.standardShadow
@@ -52,10 +54,8 @@ internal fun RecoveryScreen(
                 Snackbar(
                     modifier = Modifier
                         .padding(12.dp)
-                        .background(Color.White)
-                        .semantics { testTag = "RecoveryScreen Snackbar" },
+                        .background(Color.White),
                     containerColor = Color.Red,
-
                     ) {
                     Text(
                         text = data.visuals.message,
@@ -227,3 +227,13 @@ fun WordField(
         singleLine = true,
     )
 }
+
+// @Preview(device = Devices.PIXEL_4, showBackground = true)
+// @Composable
+// internal fun RecoveryScreenPreview() {
+//     GargoyleTheme {
+//         RecoveryScreen(
+//             // onBuildKeychainButtonPressed =
+//         )
+//     }
+// }

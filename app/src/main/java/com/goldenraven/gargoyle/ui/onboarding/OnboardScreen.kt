@@ -16,13 +16,17 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextDecoration
+import androidx.compose.ui.tooling.preview.Devices
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ChainStyle
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.goldenraven.gargoyle.R
 import com.goldenraven.gargoyle.ui.Screen
+import com.goldenraven.gargoyle.ui.theme.GargoyleTheme
 import com.goldenraven.gargoyle.ui.theme.GargoyleTypography
 import com.goldenraven.gargoyle.ui.theme.standardBorder
 import com.goldenraven.gargoyle.ui.theme.standardShadow
@@ -171,3 +175,14 @@ fun OnboardScreen(
         }
     }
 }
+
+// @Preview(device = Devices.PIXEL_4, showBackground = true)
+// @Composable
+// internal fun OnboardScreenPreview() {
+//     GargoyleTheme {
+//         OnboardScreen(
+//             navController = rememberNavController(),
+//             // onBuildKeychainButtonPressed =
+//         )
+//     }
+// }

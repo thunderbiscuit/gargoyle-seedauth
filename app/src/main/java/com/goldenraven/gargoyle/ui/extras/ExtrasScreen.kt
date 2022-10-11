@@ -13,10 +13,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Devices
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.goldenraven.gargoyle.R
 import com.goldenraven.gargoyle.ui.Screen
+import com.goldenraven.gargoyle.ui.theme.GargoyleTheme
 import com.goldenraven.gargoyle.ui.theme.GargoyleTypography
 
 @Composable
@@ -136,5 +140,13 @@ internal fun ExtrasScreen(navController: NavController) {
                 tint = Color(0xff000000)
             )
         }
+    }
+}
+
+@Preview(device = Devices.PIXEL_4, showBackground = true)
+@Composable
+internal fun PreviewExtrasScreen() {
+    GargoyleTheme {
+        ExtrasScreen(navController = rememberNavController())
     }
 }

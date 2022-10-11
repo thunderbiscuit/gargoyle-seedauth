@@ -13,9 +13,12 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.tooling.preview.Devices
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.NavHostController
+import com.goldenraven.gargoyle.ui.theme.GargoyleTheme
 import com.goldenraven.gargoyle.ui.theme.GargoyleTypography
 import com.goldenraven.gargoyle.utils.NavigationItem
 import com.google.accompanist.navigation.animation.rememberAnimatedNavController
@@ -85,3 +88,12 @@ internal fun BottomNavigationBar(navController: NavController) {
         }
     }
 }
+
+// Doesn't work, not sure why
+// @Preview(device = Devices.PIXEL_4, showBackground = true)
+// @Composable
+// internal fun PreviewHomeScreen() {
+//     GargoyleTheme {
+//         HomeScreen()
+//     }
+// }

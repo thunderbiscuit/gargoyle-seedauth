@@ -7,6 +7,7 @@ package com.goldenraven.gargoyle.ui
 
 import android.Manifest
 import android.content.pm.PackageManager
+// import androidx.compose.ui.tooling.preview
 import android.util.Log
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
@@ -27,6 +28,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.viewinterop.AndroidView
@@ -35,6 +37,7 @@ import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.core.content.ContextCompat
 import com.goldenraven.gargoyle.R
 import com.goldenraven.gargoyle.network.KtorClient
+import com.goldenraven.gargoyle.ui.theme.GargoyleTheme
 import com.goldenraven.gargoyle.ui.theme.GargoyleTypography
 import com.goldenraven.gargoyle.ui.theme.standardBorder
 import com.goldenraven.gargoyle.ui.theme.standardShadow
@@ -342,3 +345,12 @@ private fun LoginDialog(domain: String, url: Url, openDialog: MutableState<Boole
         },
     )
 }
+
+// Doesn't work, not sure why
+// @androidx.compose.ui.tooling.preview.Preview(device = Devices.PIXEL_4, showBackground = true)
+// @Composable
+// internal fun PreviewScanScreen() {
+//     GargoyleTheme {
+//         ScanScreen()
+//     }
+// }

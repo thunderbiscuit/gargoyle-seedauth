@@ -10,9 +10,12 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.tooling.preview.Devices
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ChainStyle
 import androidx.constraintlayout.compose.ConstraintLayout
+import com.goldenraven.gargoyle.ui.theme.GargoyleTheme
 import com.goldenraven.gargoyle.ui.theme.GargoyleTypography
 
 @Composable
@@ -60,5 +63,13 @@ internal fun LoginsScreen() {
                     bottom.linkTo(parent.bottom)
                 },
         ) {}
+    }
+}
+
+@Preview(device = Devices.PIXEL_4, showBackground = true)
+@Composable
+internal fun PreviewLoginsScreen() {
+    GargoyleTheme {
+        LoginsScreen()
     }
 }

@@ -89,11 +89,12 @@ dependencies {
     testImplementation(kotlin("test"))
     testImplementation("junit:junit:4.13.2")
     testImplementation("fr.acinq.bitcoin:bitcoin-kmp-jvm:0.9.0")
-    // testImplementation("fr.acinq.bitcoin:bitcoin-kmp-linux:0.9.0")
-    testImplementation("fr.acinq.secp256k1:secp256k1-kmp-jni-jvm-darwin:0.7.0")
+    testImplementation("fr.acinq.secp256k1:secp256k1-kmp-jni-jvm-linux:0.7.0")
+
     androidTestImplementation("androidx.test.ext:junit:1.1.3")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.4.0")
     androidTestImplementation("androidx.compose.ui:ui-test-junit4:1.2.1")
+
     debugImplementation("androidx.compose.ui:ui-tooling:1.2.1")
     debugImplementation("androidx.compose.ui:ui-test-manifest:1.2.1")
 }
